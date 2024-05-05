@@ -14,7 +14,7 @@ def GenerateSeed(bombs_number):
     return bomb_coords
 
 def GenerateField(seed):
-    field = [[0 for column in range(15)] for row in range(13)]
+    field = [[0 for column in range(10)] for row in range(10)]
     for bomb in seed:
        field[bomb[0]][bomb[1]] = "bomb"
     for i in field:
