@@ -28,7 +28,7 @@ def CalculateFieldCells(field):
 
     for i in range(field_i_size):
         for j in range(field_j_size):
-            if(j!="bomb"):             
+            if(field[i][j]!="bomb"):             
                 check_cells_list =[]
                 if(j>0):
                     if field[i][j-1]=="bomb":
