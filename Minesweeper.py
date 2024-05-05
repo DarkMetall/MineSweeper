@@ -2,6 +2,8 @@
 import random
 import math
 
+BOMB = 9
+
 def GenerateSeed(bombs_number):
     bomb_coords=[]
     while len(bomb_coords)<bombs_number:
@@ -16,9 +18,9 @@ def GenerateSeed(bombs_number):
 def GenerateField(seed):
     field = [[0 for column in range(10)] for row in range(10)]
     for bomb in seed:
-       field[bomb[0]][bomb[1]] = "bomb"
-    for i in field:
-        print(i)
+       field[bomb[0]][bomb[1]] = BOMB
+    #for i in field:
+     #   print(i)
     CalculateFieldCells(field)
    
 
@@ -26,33 +28,33 @@ def CalculateFieldCells(field):
     field_j_size = len(field[0])-1
     field_i_size = len(field)-1
 
-    for i in range(field_i_size):
-        for j in range(field_j_size):
-            if(field[i][j]!="bomb"):             
+    for i in range(field_i_size+1):
+        for j in range(field_j_size+1):
+            if(field[i][j]!=BOMB):             
                 check_cells_list =[]
                 if(j>0):
-                    if field[i][j-1]=="bomb":
+                    if field[i][j-1]==BOMB:
                         check_cells_list.append(field[i][j-1])
                 if(j<field_j_size):
-                    if field[i][j+1]=="bomb":
+                    if field[i][j+1]==BOMB:
                         check_cells_list.append(field[i][j+1])
                 if(i>0):
-                    if field[i-1][j]=="bomb":
+                    if field[i-1][j]==BOMB:
                         check_cells_list.append(field[i-1][j])
                     if(j>0):
-                         if field[i-1][j-1]=="bomb":
+                         if field[i-1][j-1]==BOMB:
                             check_cells_list.append(field[i-1][j-1])
                     if(j<field_j_size):
-                         if field[i-1][j+1]=="bomb":
+                         if field[i-1][j+1]==BOMB:
                             check_cells_list.append(field[i-1][j+1])
                 if(i<field_i_size):
-                    if field[i+1][j]=="bomb":
+                    if field[i+1][j]==BOMB:
                         check_cells_list.append(field[i+1][j])
                     if(j>0):
-                         if field[i+1][j-1]=="bomb":
+                         if field[i+1][j-1]==BOMB:
                             check_cells_list.append(field[i+1][j-1])
                     if(j<field_j_size):
-                         if field[i+1][j+1]=="bomb":
+                         if field[i+1][j+1]==BOMB:
                             check_cells_list.append(field[i+1][j+1])
                 field[i][j]=len(check_cells_list)
          
