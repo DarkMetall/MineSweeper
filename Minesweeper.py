@@ -1,13 +1,16 @@
 #Minesweeper
 import random
+import json
 import math
 
 BOMB = 9
+SIZE_I =10
+SIZE_J =10
 
-def GenerateSeed(bombs_number):
+def GenerateSeed(bombs_number,i,j):
     bomb_coords=[]
     while len(bomb_coords)<bombs_number:
-        rand_number = [random.randint(0,9),random.randint(0,9)]
+        rand_number = [random.randint(0,i),random.randint(0,j)]
         if rand_number not in bomb_coords:
             bomb_coords.append(rand_number)
             #print("Added:"+ str(rand_number))
@@ -15,19 +18,23 @@ def GenerateSeed(bombs_number):
            # print("Not added:"+ str(rand_number))   
     return bomb_coords
 
-def GenerateField(seed):
-    field = [[0 for column in range(10)] for row in range(10)]
+def GenerateEmptyField(i,j):
+    field = [[0 for column in range(i)] for row in range(j)]
+    return field
+
+def GenerateField(seed,i,j):
+    field = GenerateEmptyField(i,j)
     for bomb in seed:
        field[bomb[0]][bomb[1]] = BOMB
     #for i in field:
      #   print(i)
-    CalculateFieldCells(field)
+    return field
+
    
 
 def CalculateFieldCells(field):
     field_j_size = len(field[0])-1
     field_i_size = len(field)-1
-
     for i in range(field_i_size+1):
         for j in range(field_j_size+1):
             if(field[i][j]!=BOMB):             
@@ -60,8 +67,42 @@ def CalculateFieldCells(field):
          
     for i in field:
         print(i)
-                
-            
+    return field              
+
+def MakeTurn(i,j):
+     NotImplemented
+
+def LoadMinesweeperInfo():
+       gameinfo = discord["storage"]["user"]["gameinfo"]
+       minesweeper_info = json.loads(gameinfo)["minesweeper"]
+       print(minesweeper_info)
+       return minesweeper_info
+
+#minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
 
 
-GenerateField(GenerateSeed(13))
+def WriteMinesweeperInfo():
+     gameinfo = discord["storage"]["user"]["gameinfo"]
+
+
+
+## there  should be 3 variants:
+# 1 - game is created
+#2 - game is finished
+#3 game is not created and not finished
+
+
+
+minesweeper_info = LoadMinesweeperInfo()
+if(minesweeper_info[0]==False) or (minesweeper_info==None):
+    real_field = CalculateFieldCells(GenerateField(GenerateSeed(13)))
+    player_field = GenerateEmptyField(10,10)
+
+if(minesweeper_info[0]==True):
+    player_field = minesweeper_info[1]
+    real_field = CalculateFieldCells(GenerateField(minesweeper_info[2], minesweeper_info[3][0], minesweeper_info[3][1]))
+
+real_field = CalculateFieldCells(GenerateField(GenerateSeed(13)))
+player_field = GenerateEmptyField(10,10)
+
+
