@@ -102,7 +102,7 @@ def WriteMinesweeperInfo():#status, playerfield, seed, i_j):
 
 
 minesweeper_info = LoadMinesweeperInfo()
-#if(minesweeper_info[0]==False) or (minesweeper_info==None):
+####if(minesweeper_info[0]==False) or (minesweeper_info==None):
  #
     #real_field = CalculateFieldCells(GenerateField(GenerateSeed(13)))
     #player_field = GenerateEmptyField(10,10)
