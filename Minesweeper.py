@@ -83,7 +83,7 @@ def LoadMinesweeperInfo():
 
 def WriteMinesweeperInfo():#status, playerfield, seed, i_j):
      gameinfo = discord["storage"]["user"]["gameinfo"]
-     message = gameinfo[minesweeper]
+     message = gameinfo["minesweeper"] 
      print(message)
      #message[0]=status
      #message[1]=playerfield
