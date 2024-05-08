@@ -100,10 +100,16 @@ def WriteMinesweeperInfo():#status, playerfield, seed, i_j):
 #3 game is not created and not finished
 
 
+#if(minesweeper_info[0]==False) or (minesweeper_info==None):
+ #
+    #real_field = CalculateFieldCells(GenerateField(GenerateSeed(13)))
+    #player_field = GenerateEmptyField(10,10)
 
+#if(minesweeper_info[0]==True):
+    #player_field = minesweeper_info[1]
+    #real_field = CalculateFieldCells(GenerateField(minesweeper_info[2], minesweeper_info[3][0], minesweeper_info[3][1]))
 
-
-real_field = CalculateFieldCells(GenerateField(GenerateSeed(13)))
+real_field = CalculateFieldCells(GenerateField(GenerateSeed(13),10,10))
 player_field = GenerateEmptyField(10,10)
 
 
