@@ -73,10 +73,11 @@ def MakeTurn(i,j):
      NotImplemented
 
 def LoadMinesweeperInfo():
-       gameinfo = discord["storage"]["user"]["gameinfo"]
-       minesweeper_info = json.loads(gameinfo)["minesweeper"]
-       print(minesweeper_info)
-       return minesweeper_info
+       gameinfo = discord["storage"]["user"]#["gameinfo"]
+       print(gameinfo)
+       #minesweeper_info = json.loads(gameinfo)["minesweeper"]
+       #print(minesweeper_info)
+       #return minesweeper_info
 
 #minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
 
