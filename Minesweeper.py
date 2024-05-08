@@ -3,7 +3,7 @@ import random
 import json
 import math
 
-BOMB = 9
+BOMB = 9 #bomb sign
 SIZE_I =10
 SIZE_J =10
 
@@ -81,8 +81,15 @@ def LoadMinesweeperInfo():
 #minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
 
 
-def WriteMinesweeperInfo():
+def WriteMinesweeperInfo():#status, playerfield, seed, i_j):
      gameinfo = discord["storage"]["user"]["gameinfo"]
+     message = gameinfo[minesweeper]
+     print(message)
+     #message[0]=status
+     #message[1]=playerfield
+     #message[2] = seed
+     #message[3] = i_j
+
 
 
 
