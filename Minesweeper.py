@@ -70,22 +70,48 @@ def CalculateFieldCells(field):
     return field              
 
 def MakeTurn(i,j):
-     NotImplemented
+    minesweeper_info = GetMinesweeperInfo()
+    real_field = CalculateFieldCells(GenerateField(GenerateSeed(13, minesweeper_info["size"][0],minesweeper_info["size"][1]),minesweeper_info["size"][0],minesweeper_info["size"][1]))
+    if(minesweeper_info["playerfield"][i][j]==1):
+        print("This field is already opened, try another one")
+    else:
+        if(real_field[i][j]==BOMB):
+            status=False
+            seed=0
+            print("You lost!")
+            WriteMinesweeperInfo(status,0,0,0)
+        else:
+            if(real_field[i][j]==0):
+                #If the field is empty, it should open more cells
+                NotImplemented
+            else:
+                #if the opened cell has number
+                minesweeper_info["playerfield"][i][j]=1
+                WriteMinesweeperInfo(minesweeper_info["status"],minesweeper_info["playerfield"],minesweeper_info["seed"],minesweeper_info["size"])
 
-def LoadMinesweeperInfo():
-       gameinfo = discord["storage"]["user"]#["gameinfo"]
-       print(gameinfo)
-       #minesweeper_info = json.loads(gameinfo)["minesweeper"]
-       #print(minesweeper_info)
-       #return minesweeper_info
+
+def GetGameInfo():
+    return discord["storage"]["user"]["gameinfo"]
+
+def SetGameInfo(gameinfo):
+    discord["storage"]["user"]["gameinfo"]= gameinfo
+
+def GetMinesweeperInfo():
+       gameinfo = GetGameInfo()
+       minesweeper_info = gameinfo["minesweeper"]
+       return minesweeper_info
 
 #minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
 
 
-def WriteMinesweeperInfo():#status, playerfield, seed, i_j):
-     gameinfo = discord["storage"]["user"]["gameinfo"]
-     message =  gameinfo["minesweeper"] 
-     print(message)
+def WriteMinesweeperInfo(status, playerfield, seed, size):
+     gameinfo = GetGameInfo()
+     print(gameinfo)
+     gameinfo["minesweeper"]["status"]= status
+     gameinfo["minesweeper"]["playerfield"]=playerfield
+     gameinfo["minesweeper"]["seed"]=seed
+     gameinfo["minesweeper"][size] = size
+
      #message[0]=status
      #message[1]=playerfield
      #message[2] = seed
@@ -109,7 +135,7 @@ def WriteMinesweeperInfo():#status, playerfield, seed, i_j):
     #player_field = minesweeper_info[1]
     #real_field = CalculateFieldCells(GenerateField(minesweeper_info[2], minesweeper_info[3][0], minesweeper_info[3][1]))
 
-real_field = CalculateFieldCells(GenerateField(GenerateSeed(13,10,10)))
+real_field = CalculateFieldCells(GenerateField(GenerateSeed(13,10,10),13,10))
 player_field = GenerateEmptyField(10,10)
 
 
