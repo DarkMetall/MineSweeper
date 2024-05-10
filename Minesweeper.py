@@ -121,18 +121,17 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
         gameinfo["minesweeper"]["seed"]=seed
         gameinfo["minesweeper"][size] = size
      else:
-          message = [
-                {"minesweeper":
-                 [
-                     {
-                         "status": status,
+          message = {
+                    "minesweeper":
+          [
+                         {
+                        "status": status,
                          "playerfield": playerfield,
                          "seed": seed,
                          "size": size
-                     }
-                 ]
-                }
-            ]
+                         }
+          ]
+          }
           SetGameInfo(message)
          
 
