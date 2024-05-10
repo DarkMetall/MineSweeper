@@ -95,7 +95,8 @@ def GetGameInfo():
     return discord["storage"]["user"]["gameinfo"]
 
 def SetGameInfo(gameinfo):
-    discord["storage"]["user"]["gameinfo"]= gameinfo
+    #if(discord["storage"]["user"]["gameinfo"]):
+        discord["storage"]["user"]["gameinfo"]= gameinfo
 
 def GetMinesweeperInfo():
        gameinfo = GetGameInfo()
@@ -114,15 +115,11 @@ def CreateMinesweeperInfo(minesweeper_info):
                          "playerfield": minesweeper_info["playerfield"],
                          "seed": minesweeper_info["seed"],
                          "size": minesweeper_info["size"]
-
                      }
-
                  ]
-                 
-                 
                 }
             ]
-            message.update()
+            discord["storage"]["user"]["gameinfo"].update(message)
 
 
 
@@ -145,7 +142,7 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
 ## there  should be 3 variants:
 # 1 - game is created
 #2 - game is finished
-#3 game is not created and not finished
+#3 game is not created and not finished (2-3 are the same)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
