@@ -156,7 +156,7 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
 
 
 minesweeper_info = GetMinesweeperInfo()
-if(minesweeper_info["status"]==False) or not(minesweeper_info):
+if not(minesweeper_info) or (minesweeper_info["status"]==False):
     seed = GenerateSeed(13,SIZE_I,SIZE_J)
     real_field = CalculateFieldCells(GenerateField(seed,SIZE_I,SIZE_J))
     player_field = GenerateEmptyField(SIZE_I,SIZE_J)
