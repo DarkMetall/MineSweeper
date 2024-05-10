@@ -77,7 +77,6 @@ def MakeTurn(i,j):
     else:
         if(real_field[i][j]==BOMB):
             status=False
-            seed=0
             print("You lost!")
             WriteMinesweeperInfo(status,0,0,0)
         else:
@@ -165,5 +164,5 @@ if(minesweeper_info["status"]==False) or not(minesweeper_info):
     print(player_field)
 elif(minesweeper_info["status"]==True):
     player_field = minesweeper_info["playerfield"]
-    real_field = CalculateFieldCells(GenerateField(minesweeper_info[2], minesweeper_info[3][0], minesweeper_info[3][1]))
+    real_field = CalculateFieldCells(GenerateField(minesweeper_info["seed"], minesweeper_info["size"][0], minesweeper_info["size"][1]))
 
