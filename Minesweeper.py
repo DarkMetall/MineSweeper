@@ -140,6 +140,16 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
      #message[1]=playerfield
      #message[2] = seed
      #message[3] = i_j
+def GetArgs():
+    args="{args}".split()
+    if(len(args)==2):
+        if(args[0]>=0) and (args[0]<=SIZE_I) and \
+        (args[1]>=0) and (args[1]<=SIZE_J):
+            MakeTurn(args[0],args[1])
+        else:
+            print("The parameters go out of range")
+    else:
+        print("Eror: Wrong number of args")
 
 
 
