@@ -4,12 +4,12 @@ import json
 import math
 
 BOMB = 9 #bomb sign
-SIZE_I =10
-SIZE_J =10
+SIZE_I = 10
+SIZE_J = 10
 
 def GenerateSeed(bombs_number,i,j):
     bomb_coords=[]
-    while len(bomb_coords)<bombs_number:
+    while len(bomb_coords)<=bombs_number:
         rand_number = [random.randint(0,i),random.randint(0,j)]
         if rand_number not in bomb_coords:
             bomb_coords.append(rand_number)
