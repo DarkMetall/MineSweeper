@@ -104,6 +104,27 @@ def GetMinesweeperInfo():
 
 #minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
 
+def CreateMinesweeperInfo(minesweeper_info):
+        if not(GetGameInfo()):
+            message = [
+                {"minesweeper":
+                 [
+                     {
+                         "status": minesweeper_info["status"],
+                         "playerfield": minesweeper_info["playerfield"],
+                         "seed": minesweeper_info["seed"],
+                         "size": minesweeper_info["size"]
+
+                     }
+
+                 ]
+                 
+                 
+                }
+            ]
+            message.update()
+
+
 
 def WriteMinesweeperInfo(status, playerfield, seed, size):
      gameinfo = GetGameInfo()
@@ -134,8 +155,10 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
 
 minesweeper_info = GetMinesweeperInfo()
 if(minesweeper_info[0]==False) or (minesweeper_info==None):
-    real_field = CalculateFieldCells(GenerateField(GenerateSeed(13),10,10),10,10)
+    seed = GenerateSeed(13,10,10)
+    real_field = CalculateFieldCells(GenerateField(seed,10,10))
     player_field = GenerateEmptyField(10,10)
+    WriteMinesweeperInfo(True,player_field,seed,[10,10])
 
 if(minesweeper_info[0]==True):
     player_field = minesweeper_info[1]
