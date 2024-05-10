@@ -4,8 +4,8 @@ import json
 import math
 
 BOMB = 9 #bomb sign
-SIZE_I = 10
-SIZE_J = 10
+SIZE_I = int(10)
+SIZE_J = int(10)
 
 def GenerateSeed(bombs_number,i,j):
     bomb_coords=[]
