@@ -168,6 +168,7 @@ def GetArgs():
 minesweeper_info = GetMinesweeperInfo()
 if not(minesweeper_info) or (minesweeper_info["status"]==False):
     seed = GenerateSeed(13,SIZE_I,SIZE_J)
+    print(seed)
     real_field = CalculateFieldCells(GenerateField(seed,SIZE_I,SIZE_J))
     player_field = GenerateEmptyField(SIZE_I,SIZE_J)
     WriteMinesweeperInfo(True,player_field,seed,[SIZE_I,SIZE_J])
