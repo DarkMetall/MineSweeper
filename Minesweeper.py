@@ -92,44 +92,50 @@ def MakeTurn(i,j):
 
 
 def GetGameInfo():
-    return discord["storage"]["user"]["gameinfo"]
-
+    if ("gameinfo" in discord["storage"]["user"]):
+        return discord["storage"]["user"]["gameinfo"]
+    else:
+        return {}
+ 
 def SetGameInfo(gameinfo):
-    #if(discord["storage"]["user"]["gameinfo"]):
+    if ("gameinfo" in discord["storage"]["user"]):
         discord["storage"]["user"]["gameinfo"]= gameinfo
+    else:
+        discord["storage"]["user"].update(gameinfo)
 
 def GetMinesweeperInfo():
        gameinfo = GetGameInfo()
-       minesweeper_info = gameinfo["minesweeper"]
-       return minesweeper_info
+       if(gameinfo):
+        minesweeper_info = gameinfo["minesweeper"]
+        return minesweeper_info
+       else:
+           return {}
 
 #minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
-
-def CreateMinesweeperInfo(minesweeper_info):
-        if not(GetGameInfo()):
-            message = [
-                {"minesweeper":
-                 [
-                     {
-                         "status": minesweeper_info["status"],
-                         "playerfield": minesweeper_info["playerfield"],
-                         "seed": minesweeper_info["seed"],
-                         "size": minesweeper_info["size"]
-                     }
-                 ]
-                }
-            ]
-            discord["storage"]["user"]["gameinfo"].update(message)
-
-
 
 def WriteMinesweeperInfo(status, playerfield, seed, size):
      gameinfo = GetGameInfo()
      print(gameinfo)
-     gameinfo["minesweeper"]["status"]= status
-     gameinfo["minesweeper"]["playerfield"]=playerfield
-     gameinfo["minesweeper"]["seed"]=seed
-     gameinfo["minesweeper"][size] = size
+     if(gameinfo):
+        gameinfo["minesweeper"]["status"]= status
+        gameinfo["minesweeper"]["playerfield"]=playerfield
+        gameinfo["minesweeper"]["seed"]=seed
+        gameinfo["minesweeper"][size] = size
+     else:
+          message = [
+                {"minesweeper":
+                 [
+                     {
+                         "status": status,
+                         "playerfield": playerfield,
+                         "seed": seed,
+                         "size": size
+                     }
+                 ]
+                }
+            ]
+          SetGameInfo(message)
+         
 
      #message[0]=status
      #message[1]=playerfield
@@ -151,17 +157,13 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
 
 
 minesweeper_info = GetMinesweeperInfo()
-if(minesweeper_info[0]==False) or (minesweeper_info==None):
-    seed = GenerateSeed(13,10,10)
-    real_field = CalculateFieldCells(GenerateField(seed,10,10))
-    player_field = GenerateEmptyField(10,10)
-    WriteMinesweeperInfo(True,player_field,seed,[10,10])
-
-if(minesweeper_info[0]==True):
+if(minesweeper_info[0]==False) or not(minesweeper_info):
+    seed = GenerateSeed(13,SIZE_I,SIZE_J)
+    real_field = CalculateFieldCells(GenerateField(seed,SIZE_I,SIZE_J))
+    player_field = GenerateEmptyField(SIZE_I,SIZE_J)
+    WriteMinesweeperInfo(True,player_field,seed,[SIZE_I,SIZE_J])
+    print(player_field)
+elif(minesweeper_info[0]==True):
     player_field = minesweeper_info[1]
     real_field = CalculateFieldCells(GenerateField(minesweeper_info[2], minesweeper_info[3][0], minesweeper_info[3][1]))
-
-#real_field = CalculateFieldCells(GenerateField(GenerateSeed(13,10,10),10,10))
-#player_field = GenerateEmptyField(10,10)
-
 
