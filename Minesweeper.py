@@ -65,8 +65,8 @@ def CalculateFieldCells(field):
                             check_cells_list.append(field[i+1][j+1])
                 field[i][j]=len(check_cells_list)
          
-    for i in field:
-        print(i)
+   # for i in field:
+     #   print(i)
     return field              
 
 def MakeTurn(i,j):
