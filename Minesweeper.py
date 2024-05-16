@@ -3,6 +3,7 @@ import random
 import json
 import math
 
+BOMB_AMOUNT =13
 BOMB = 9 #bomb sign
 SIZE_I = 10
 SIZE_J = 10
@@ -71,7 +72,7 @@ def CalculateFieldCells(field):
 
 def MakeTurn(i,j):
     minesweeper_info = GetMinesweeperInfo()
-    real_field = CalculateFieldCells(GenerateField(GenerateSeed(13, minesweeper_info["size"][0],minesweeper_info["size"][1]),minesweeper_info["size"][0],minesweeper_info["size"][1]))
+    real_field = CalculateFieldCells(GenerateField(GenerateSeed(BOMB_AMOUNT, minesweeper_info["size"][0],minesweeper_info["size"][1]),minesweeper_info["size"][0],minesweeper_info["size"][1]))
     if(minesweeper_info["playerfield"][i][j]==1):
         print("This field is already opened, try another one")
     else:
@@ -86,8 +87,16 @@ def MakeTurn(i,j):
             else:
                 #if the opened cell has number
                 minesweeper_info["playerfield"][i][j]=1
-                
                 WriteMinesweeperInfo(minesweeper_info["status"],minesweeper_info["playerfield"],minesweeper_info["seed"],minesweeper_info["size"])
+    win_counter = 0
+    for i in player_field:
+        for j in player_field:
+            if(["playerfield"][i][j]==1) and (real_field[i][j != BOMB]):
+                win_counter+=1
+            if(win_counter==(SIZE_I*SIZE_J)-BOMB_AMOUNT):
+                print("You won the game!")
+                status=False
+                WriteMinesweeperInfo(status,0,0,0)
 
 
 def GetGameInfo():
@@ -170,7 +179,7 @@ def GetArgs():
 minesweeper_info = GetMinesweeperInfo()
 if not(minesweeper_info) or (minesweeper_info["status"]==False):
     print("no info found")
-    seed = GenerateSeed(13,SIZE_I,SIZE_J)
+    seed = GenerateSeed(BOMB_AMOUNT,SIZE_I,SIZE_J)
    # print(seed)
     real_field = CalculateFieldCells(GenerateField(seed,SIZE_I,SIZE_J))
     player_field = GenerateEmptyField(SIZE_I,SIZE_J)
