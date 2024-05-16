@@ -8,6 +8,33 @@ BOMB = 9 #bomb sign
 SIZE_I = 10
 SIZE_J = 10
 
+#discord emojis
+EMPTY =  ":blue_square:"
+ONE = ":one:"
+TWO = ":two:"
+THREE = ":three:"
+FOUR = ":four:"
+FIVE = ":five:"
+SIX = ":six:"
+SEVEN = ":seven:"
+EIGHT = ":eight:"
+NINE = ":nine:"
+ZERO = ":zero:"
+
+
+##############\
+
+#f = open('sample.json') 
+#discord = json.load(f) 
+#if not (discord):
+   # discord =  {}
+  #  discord["storage"]={}
+ #   discord["storage"]["user"]={}
+#    discord["storage"]["user"]["gameinfo"]={}
+#####################
+
+
+
 def GenerateSeed(bombs_number,i,j):
     bomb_coords=[]
     while len(bomb_coords)<=bombs_number:
@@ -18,6 +45,7 @@ def GenerateSeed(bombs_number,i,j):
         #else:
            # print("Not added:"+ str(rand_number))   
     return bomb_coords
+
 
 def GenerateEmptyField(i,j):
     field = [[0 for column in range(i)] for row in range(j)]
@@ -70,6 +98,38 @@ def CalculateFieldCells(field):
      #   print(i)
     return field              
 
+
+def PrintField(playerfield, realfield):
+    show_field =[]
+    for i in range(SIZE_I):
+        for j in range(SIZE_J):
+            if(player_field[i][j]):
+                match real_field[i][j]:
+                    case 0:
+                        show_field[i][j]= ZERO
+                    case 1:
+                        show_field[i][j]= ONE
+                    case 2:
+                        show_field[i][j]= TWO
+                    case 3:
+                        show_field[i][j]= THREE
+                    case 4:
+                        show_field[i][j]= FOUR
+                    case 5:
+                        show_field[i][j]= FIVE
+                    case 6:
+                        show_field[i][j]= SIX
+                    case 7:
+                        show_field[i][j]= SEVEN
+                    case 8:
+                        show_field[i][j]= EIGHT
+                    case 9:
+                        show_field[i][j]= NINE
+            else:
+                show_field[i][j]=EMPTY
+    for row in show_field:
+        print(row)
+
 def MakeTurn(i,j):
     minesweeper_info = GetMinesweeperInfo()
     real_field = CalculateFieldCells(GenerateField(GenerateSeed(BOMB_AMOUNT, minesweeper_info["size"][0],minesweeper_info["size"][1]),minesweeper_info["size"][0],minesweeper_info["size"][1]))
@@ -77,16 +137,21 @@ def MakeTurn(i,j):
         print("This field is already opened, try another one")
     else:
         if(real_field[i][j]==BOMB):
+            minesweeper_info["playerfield"][i][j]=1
             status=False
             print("You lost!")
+            PrintField(minesweeper_info["playerfield"], real_field)
             WriteMinesweeperInfo(status,0,0,0)
         else:
             if(real_field[i][j]==0):
                 #If the field is empty, it should open more cells
-                NotImplemented
+                 minesweeper_info["playerfield"][i][j]=1
+                 PrintField(minesweeper_info["playerfield"], real_field)
+                 WriteMinesweeperInfo(minesweeper_info["status"],minesweeper_info["playerfield"],minesweeper_info["seed"],minesweeper_info["size"])
             else:
                 #if the opened cell has number
                 minesweeper_info["playerfield"][i][j]=1
+                PrintField(minesweeper_info["playerfield"], real_field)
                 WriteMinesweeperInfo(minesweeper_info["status"],minesweeper_info["playerfield"],minesweeper_info["seed"],minesweeper_info["size"])
     win_counter = 0
     for i in player_field:
@@ -95,6 +160,7 @@ def MakeTurn(i,j):
                 win_counter+=1
             if(win_counter==(SIZE_I*SIZE_J)-BOMB_AMOUNT):
                 print("You won the game!")
+                PrintField(minesweeper_info["playerfield"], real_field)
                 status=False
                 WriteMinesweeperInfo(status,0,0,0)
 
@@ -112,10 +178,15 @@ def SetGameInfo(gameinfo):
         discord["storage"]["user"]["gameinfo"]= gameinfo
         #discord["storage"]["user"].update(gameinfo)
 
+   # with open("sample.json", "w") as outfile: 
+        #json.dump(discord, outfile)
+
+
 def GetMinesweeperInfo():
        gameinfo = GetGameInfo()
        if(gameinfo):
-        minesweeper_info = json.loads(gameinfo)["minesweeper"]
+        #################################minesweeper_info = json.loads(gameinfo)["minesweeper"]
+        minesweeper_info = gameinfo["minesweeper"]
         return minesweeper_info
        else:
            return {}
@@ -124,7 +195,6 @@ def GetMinesweeperInfo():
 
 def WriteMinesweeperInfo(status, playerfield, seed, size):
      gameinfo = GetGameInfo()
-     print(gameinfo)
      if(gameinfo):
         gameinfo["minesweeper"]["status"]= status
         gameinfo["minesweeper"]["playerfield"]=playerfield
@@ -133,14 +203,14 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
      else:
           message = {
                     "minesweeper":
-          [
-                         {
+          {
+                         
                         "status": status,
                          "playerfield": playerfield,
                          "seed": seed,
                          "size": size
-                         }
-          ]
+          } 
+          
           }
           SetGameInfo(message)
          
@@ -157,6 +227,8 @@ def GetArgs():
             MakeTurn(args[0],args[1])
         else:
             print("The parameters go out of range")
+    elif(len(args)==0):
+        PrintField(minesweeper_info["playerfield"], CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J)))
     else:
         print("Eror: Wrong number of args")
 
@@ -176,7 +248,7 @@ def GetArgs():
 
 
 
-
+#print(GetMinesweeperInfo())
 minesweeper_info = GetMinesweeperInfo()
 if not(minesweeper_info) or (minesweeper_info["status"]==False):
     print("no info found")
@@ -186,8 +258,13 @@ if not(minesweeper_info) or (minesweeper_info["status"]==False):
     player_field = GenerateEmptyField(SIZE_I,SIZE_J)
     WriteMinesweeperInfo(True,player_field,seed,[SIZE_I,SIZE_J])
     #print(player_field)
+    GetArgs()
 elif(minesweeper_info["status"]==True):
     print("found info")
-    player_field = minesweeper_info["playerfield"]
-    real_field = CalculateFieldCells(GenerateField(minesweeper_info["seed"], minesweeper_info["size"][0], minesweeper_info["size"][1]))
+    GetArgs()
 
+
+    #real_field = CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J))
+    #player_field = minesweeper_info["playerfield"]
+    #real_field = CalculateFieldCells(GenerateField(minesweeper_info["seed"], minesweeper_info["size"][0], minesweeper_info["size"][1]))
+    
