@@ -109,7 +109,7 @@ def SetGameInfo(gameinfo):
     if ("gameinfo" in discord["storage"]["user"]):
         discord["storage"]["user"]["gameinfo"]= gameinfo
     else:
-        discord["storage"]["user"]["gameinfo"]= 25
+        discord["storage"]["user"]["gameinfo"]= gameinfo
         #discord["storage"]["user"].update(gameinfo)
 
 def GetMinesweeperInfo():
