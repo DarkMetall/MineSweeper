@@ -215,6 +215,7 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
      #message[1]=playerfield
      #message[2] = seed
      #message[3] = i_j
+
 def GetArgs():
     args="{args}".split()
     if(len(args)==2):
@@ -225,7 +226,8 @@ def GetArgs():
             
             print("The parameters go out of range")
     else:
-         PrintField(minesweeper_info["playerfield"], CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J)))
+        minesweeper_info =GetMinesweeperInfo()
+        PrintField(minesweeper_info["playerfield"], CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J)))
     
        
 
@@ -255,9 +257,10 @@ if not(minesweeper_info) or (minesweeper_info["status"]==False):
     WriteMinesweeperInfo(True,player_field,seed,[SIZE_I,SIZE_J])
     #print(player_field)
     GetArgs()
-elif(minesweeper_info["status"]==True):
-    print("found info")
-    GetArgs()
+else:
+    if(minesweeper_info["status"]==True):
+        print("found info")
+        GetArgs()
 
 
     #real_field = CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J))
