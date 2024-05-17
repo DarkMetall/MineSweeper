@@ -37,7 +37,7 @@ ZERO = ":zero:"
 
 def GenerateSeed(bombs_number,i,j):
     bomb_coords=[]
-    while len(bomb_coords)<=bombs_number:
+    while len(bomb_coords)<bombs_number:
         rand_number = [random.randint(0,i-1),random.randint(0,j-1)]
         if rand_number not in bomb_coords:
             bomb_coords.append(rand_number)
@@ -141,7 +141,7 @@ def MakeTurn(i,j):
             status=False
             print("You lost!")
             PrintField(minesweeper_info["playerfield"], real_field)
-            WriteMinesweeperInfo(status,0,0,0)
+            WriteMinesweeperInfo(status,0,0,[0,0])
         else:
             if(real_field[i][j]==0):
                 #If the field is empty, it should open more cells
@@ -162,7 +162,7 @@ def MakeTurn(i,j):
                 print("You won the game!")
                 PrintField(minesweeper_info["playerfield"], real_field)
                 status=False
-                WriteMinesweeperInfo(status,0,0,0)
+                WriteMinesweeperInfo(status,0,0,[0,0])
 
 
 def GetGameInfo():
@@ -175,9 +175,9 @@ def GetGameInfo():
         return {}
  
 def SetGameInfo(gameinfo):
-    if ("gameinfo" in discord["storage"]["user"]):
-        discord["storage"]["user"]["gameinfo"]= gameinfo
-    else:
+   # if ("gameinfo" in discord["storage"]["user"]):
+      #  discord["storage"]["user"]["gameinfo"]= gameinfo
+    #else:
         discord["storage"]["user"]["gameinfo"]= gameinfo
         #discord["storage"]["user"].update(gameinfo)
 
@@ -198,13 +198,6 @@ def GetMinesweeperInfo():
 #minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
 
 def WriteMinesweeperInfo(status, playerfield, seed, size):
-     gameinfo = GetGameInfo()
-     if(gameinfo):
-        gameinfo["minesweeper"]["status"]= status
-        gameinfo["minesweeper"]["playerfield"]=playerfield
-        gameinfo["minesweeper"]["seed"]=seed
-        gameinfo["minesweeper"][size] = size
-     else:
           message = {
                     "minesweeper":
           {
@@ -214,7 +207,6 @@ def WriteMinesweeperInfo(status, playerfield, seed, size):
                          "seed": seed,
                          "size": size
           } 
-          
           }
           SetGameInfo(message)
          
@@ -230,11 +222,12 @@ def GetArgs():
         (args[1]>=0) and (args[1]<=SIZE_J):
             MakeTurn(args[0],args[1])
         else:
+            
             print("The parameters go out of range")
-    elif(len(args)==0):
-        PrintField(minesweeper_info["playerfield"], CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J)))
     else:
-        print("Eror: Wrong number of args")
+         PrintField(minesweeper_info["playerfield"], CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J)))
+    
+       
 
 
 
@@ -257,7 +250,6 @@ minesweeper_info = GetMinesweeperInfo()
 if not(minesweeper_info) or (minesweeper_info["status"]==False):
     print("no info found")
     seed = GenerateSeed(BOMB_AMOUNT,SIZE_I,SIZE_J)
-    print(seed)
     real_field = CalculateFieldCells(GenerateField(seed,SIZE_I,SIZE_J))
     player_field = GenerateEmptyField(SIZE_I,SIZE_J)
     WriteMinesweeperInfo(True,player_field,seed,[SIZE_I,SIZE_J])
