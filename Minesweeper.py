@@ -167,8 +167,10 @@ def MakeTurn(i,j):
 
 def GetGameInfo():
     if ("gameinfo" in discord["storage"]["user"]):
+        print("Found gameinfo in discord")
         return discord["storage"]["user"]["gameinfo"]
     else:
+        print("Found no gameinfo in discord")
         return {}
  
 def SetGameInfo(gameinfo):
