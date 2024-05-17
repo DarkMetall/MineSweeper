@@ -100,7 +100,7 @@ def CalculateFieldCells(field):
 
 
 def PrintField(playerfield, realfield):
-    show_field =[]
+    show_field = GenerateEmptyField(SIZE_I,SIZE_J)
     for i in range(SIZE_I):
         for j in range(SIZE_J):
             if(player_field[i][j]):
