@@ -185,12 +185,14 @@ def SetGameInfo(gameinfo):
 def GetMinesweeperInfo():
        gameinfo = GetGameInfo()
        print(gameinfo)
-       if(gameinfo):
-        minesweeper_info = json.loads(gameinfo)["minesweeper"]
-        #minesweeper_info = gameinfo["minesweeper"]
-        return minesweeper_info
-       else:
-           return {}
+
+       ##############
+  #     if(gameinfo):
+  #      minesweeper_info = json.loads(gameinfo)["minesweeper"]
+   #     #minesweeper_info = gameinfo["minesweeper"]
+  #      return minesweeper_info
+   #    else:
+  #         return {}
 
 #minesweeper_info: 0 - status (True or false); 1 - playerfield, 2 - seed, 3 -[i,j]
 
@@ -251,18 +253,21 @@ def GetArgs():
 
 #print(GetMinesweeperInfo())
 minesweeper_info = GetMinesweeperInfo()
-if not(minesweeper_info) or (minesweeper_info["status"]==False):
-    print("no info found")
-    seed = GenerateSeed(BOMB_AMOUNT,SIZE_I,SIZE_J)
+
+
+############
+#if not(minesweeper_info) or (minesweeper_info["status"]==False):
+  #  print("no info found")
+  #  seed = GenerateSeed(BOMB_AMOUNT,SIZE_I,SIZE_J)
    # print(seed)
-    real_field = CalculateFieldCells(GenerateField(seed,SIZE_I,SIZE_J))
-    player_field = GenerateEmptyField(SIZE_I,SIZE_J)
-    WriteMinesweeperInfo(True,player_field,seed,[SIZE_I,SIZE_J])
+  #  real_field = CalculateFieldCells(GenerateField(seed,SIZE_I,SIZE_J))
+  #  player_field = GenerateEmptyField(SIZE_I,SIZE_J)
+ #   WriteMinesweeperInfo(True,player_field,seed,[SIZE_I,SIZE_J])
     #print(player_field)
-    GetArgs()
-elif(minesweeper_info["status"]==True):
-    print("found info")
-    GetArgs()
+  #  GetArgs()
+#elif(minesweeper_info["status"]==True):
+   # print("found info")
+   # GetArgs()
 
 
     #real_field = CalculateFieldCells(GenerateField(minesweeper_info["seed"],SIZE_I,SIZE_J))
