@@ -189,7 +189,7 @@ def GetMinesweeperInfo():
        gameinfo = GetGameInfo()
        print(gameinfo)
        if(gameinfo):
-            minesweeper_info = gameinfo["minesweeper"]
+            minesweeper_info = eval(gameinfo)["minesweeper"]
             #minesweeper_info = gameinfo["minesweeper"]
             return minesweeper_info
        else:
