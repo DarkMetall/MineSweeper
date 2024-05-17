@@ -189,7 +189,8 @@ def GetMinesweeperInfo():
        gameinfo = GetGameInfo()
        print(gameinfo)
        if(gameinfo):
-            minesweeper_info = json.loads(gameinfo)["minesweeper"]
+            data= json.loads(gameinfo)
+            minesweeper_info  = data["minesweeper"]
             #minesweeper_info = gameinfo["minesweeper"]
             return minesweeper_info
        else:
