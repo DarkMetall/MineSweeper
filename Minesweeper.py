@@ -169,7 +169,7 @@ def GetGameInfo():
     if ("gameinfo" in discord["storage"]["user"]):
         print("Found gameinfo in discord")
         print(discord["storage"]["user"])
-        return discord["storage"]["user"]["gameinfo"]
+        return json.dumps(discord["storage"]["user"]["gameinfo"])
     else:
         print("Found no gameinfo in discord")
         return {}
@@ -189,7 +189,7 @@ def GetMinesweeperInfo():
        gameinfo = GetGameInfo()
        print(gameinfo)
        if(gameinfo):
-            minesweeper_info = eval(gameinfo)["minesweeper"]
+            minesweeper_info = json.loads(gameinfo)["minesweeper"]
             #minesweeper_info = gameinfo["minesweeper"]
             return minesweeper_info
        else:
